@@ -1,10 +1,5 @@
-const express = require("express");
-const app = express();
+import app from "./app.js";
 
-app.get("/", (req, res) => {
-  res.send("Backend is working!");
-});
-
-app.listen(4000, () => {
-  console.log("Server running on port 4000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server running at port ${process.env.PORT}`);
 });

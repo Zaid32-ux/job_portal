@@ -7,5 +7,11 @@ import { config } from "dotenv";
 config({ path: "./.env" });//calling again in main file bcz load it globally its recommended
 const app = express();
 app.use(cookieParser());
+app.use(express.json());
+
+// app.use("/api/v1/user", userRouter);
+// app.use("/api/v1/job", jobRouter);
+// app.use("/api/v1/application", applicationRouter);
+
   dbConnection();
 export default app;

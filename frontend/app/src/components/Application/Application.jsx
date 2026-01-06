@@ -111,6 +111,73 @@ const Application = () => {
     <section className="application">
       <div className="container">
         <h3>Application Form</h3>
+        <form onSubmit={handleApplication}>
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="number"
+            placeholder="Your Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Your Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            required
+          />
+          <textarea
+            placeholder="Cover Letter..."
+            value={coverLetter}
+            onChange={(e) => setCoverLetter(e.target.value)}
+            required
+          />
+          <div>
+            <label
+              style={{ textAlign: "start", display: "block", fontSize: "20px" }}
+            >
+              Upload Resume 
+              <p style={{ color: "red", fontSize: "12px", margin: "5px 0 0 0" }}>
+                (Supported formats: PNG, JPEG, WEBP. Max size: 2MB)
+              </p>
+            </label>
+            <input
+              type="file"
+              accept=".png,.jpg,.jpeg,.webp"
+              onChange={handleFileChange}
+              style={{ width: "100%" }}
+            />
+            {fileError && (
+              <p style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>
+                {fileError}
+              </p>
+            )}
+          </div>
+          <button 
+            type="submit" 
+            disabled={loading}
+            style={{ 
+              opacity: loading ? 0.7 : 1,
+              cursor: loading ? "not-allowed" : "pointer" 
+            }}
+          >
+            {loading ? "Submitting..." : "Send Application"}
+          </button>
+        </form>
       </div>
     </section>
   );

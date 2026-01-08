@@ -15,6 +15,63 @@ const PostJob = () => {
   const [fixedSalary, setFixedSalary] = useState("");
   const [salaryType, setSalaryType] = useState("default");
 
+  const { isAuthorized, user } = useContext(Context);
+
+  const handleJobPost = async (e) => {
+    e.preventDefault();
+    if (salaryType === "Fixed Salary") {
+      setSalaryFrom("");
+      setSalaryFrom("");
+    } else if (salaryType === "Ranged Salary") {
+      setFixedSalary("");
+    } else {
+      setSalaryFrom("");
+      setSalaryTo("");
+      setFixedSalary("");
+    }
+    await axios
+      .post(
+        "http://localhost:3000/api/v1/job/post",
+        fixedSalary.length >= 4
+          ? {
+              title,
+              description,
+              category,
+              country,
+              city,
+              location,
+              fixedSalary,
+            }
+          : {
+              title,
+              description,
+              category,
+              country,
+              city,
+              location,
+              salaryFrom,
+              salaryTo,
+            },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
+  const navigateTo = useNavigate();
+  if (!isAuthorized || (user && user.role !== "Employer")) {
+    navigateTo("/");
+  }
+
   return (
     <>
       <div className="job_post page">

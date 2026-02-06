@@ -29,36 +29,39 @@ const PostJob = () => {
       setSalaryTo("");
       setFixedSalary("");
     }
-    await axios
-      .post(
-        "http://localhost:3000/api/v1/job/post",
-        fixedSalary.length >= 4
-          ? {
-              title,
-              description,
-              category,
-              country,
-              city,
-              location,
-              fixedSalary,
-            }
-          : {
-              title,
-              description,
-              category,
-              country,
-              city,
-              location,
-              salaryFrom,
-              salaryTo,
-            },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+
+  let payload = {
+    title,
+    description,
+    category,
+    country,
+    city,
+    location,
+  };
+
+  if (salaryType === "Fixed Salary") {
+   if (fixedSalary.length < 4) {
+    toast.error("Enter valid fixed salary");
+    return;
+  }
+  payload.fixedSalary = fixedSalary;
+}
+   else if (salaryType === "Ranged Salary") {
+    payload.salaryFrom = salaryFrom;
+    payload.salaryTo = salaryTo;
+  }
+
+  await axios
+    .post(
+      "http://localhost:3000/api/v1/job/post",
+      payload,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => {
         toast.success(res.data.message);
       })

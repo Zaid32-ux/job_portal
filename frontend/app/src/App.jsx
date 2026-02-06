@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "./main";
+import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";

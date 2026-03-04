@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
 });
 
 
-//ENCRYPTING THE PASSWORD WHEN THE USER REGISTERS OR MODIFIES HIS PASSWORD
+//ENCRYPTING PASSWORD WHEN USER REGISTERS OR MODIFIES PASSWORD
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
@@ -50,12 +50,12 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-//GENERATING A JWT TOKEN WHEN A USER REGISTERS OR LOGINS, IT DEPENDS ON OUR CODE THAT WHEN DO WE NEED TO GENERATE THE JWT TOKEN WHEN THE USER LOGIN OR REGISTER OR FOR BOTH. 
+//GENERATING A JWT TOKEN WHEN A USER REGISTERS OR LOGINS
 userSchema.methods.getJWTToken = function () {
   return jwt.sign(
     { id: this._id },     // data stored in token
-    process.env.JWT_SECRET_KEY,        // secret key
-    { expiresIn: process.env.JWT_EXPIRE }   // token valid
+    process.env.JWT_SECRET_KEY,       
+    { expiresIn: process.env.JWT_EXPIRE }  
   );
 };
 

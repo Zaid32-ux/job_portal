@@ -6,6 +6,7 @@ import { config } from "dotenv";
 import userRouter from "./routes/userRoutes.js";
 import jobRouter from "./routes/jobRoutes.js";
 import applicationRouter from "./routes/applicationRoutes.js";
+import atsRouter from "./routes/atsRoutes.js";
 import fileUpload from "express-fileupload";
 import cors from "cors";
 
@@ -28,11 +29,17 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
-
+app.use(
+  fileUpload({
+    useTempFiles: false,
+  })
+);
 
  app.use("/api/v1/user", userRouter);
  app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
+app.use("/ats", atsRouter);
+
 
 
   dbConnection();

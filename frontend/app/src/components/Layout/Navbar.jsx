@@ -49,6 +49,15 @@ const Navbar = () => {
                 : "MY APPLICATIONS"}
             </Link>
           </li>
+            {user?.role === "Job Seeker" && (
+             <li>
+            <Link to="/ats" className="ats-nav-btn">
+            <span className="nav-icon">📄</span>
+           ATS CHECKER
+           </Link>
+          </li>
+  )}
+
                     {user?.role === "Employer" && (
             <>
               <li>

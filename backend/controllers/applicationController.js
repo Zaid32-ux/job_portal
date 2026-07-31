@@ -86,6 +86,7 @@ export const postApplication = catchAsyncErrors(async (req, res) => {
       coverLetter,
       phone,
       address,
+       jobId, 
       applicantID,
       employerID,
       resume: {
@@ -93,6 +94,17 @@ export const postApplication = catchAsyncErrors(async (req, res) => {
         url: cloudinaryResponse.secure_url,
       },
     });
+    const existingApplication = await Application.findOne({
+  "applicantID.user": req.user._id,
+  jobId: jobId,
+});
+
+if (existingApplication) {
+  return res.status(400).json({
+    success: false,
+    message: "You have already applied for this job",
+  });
+}
 
     res.status(200).json({
       success: true,
